@@ -1,4 +1,4 @@
-import {createBrowserRouter, RouterProvider} from 'react-router';
+import {BrowserRouter, Route, Routes} from 'react-router';
 import  ProductList from './components/ProductList';
 import ContextProvider from './context/CartContext';
 import { reducer } from './context/cartReducer';
@@ -6,21 +6,6 @@ import Layout from './components/Layout';
 import { useEffect, useReducer } from 'react';
 import Cart from './pages/Cart';
 import './App.css';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout><ProductList /></Layout>,
-  },
-  {
-    path: '/cart',
-    element:<Layout><Cart /></Layout>,
-  },
-  {
-    path: '*',
-    element: <div>404 Not Found</div>,
-  }
-]);
 
 
 function App() {
@@ -34,7 +19,13 @@ function App() {
 
   return (
     <ContextProvider value={{cart, dispatch}}>
-      <RouterProvider router={router} />
+      <BrowserRouter basename="/e-commerce-app">
+      <Routes>
+        <Route path="/" element={<Layout><ProductList /></Layout>} />
+        <Route path="/cart" element={<Layout><Cart /></Layout>} />
+        <Route path="*" element={<div>404 Not Found</div>} />
+      </Routes>
+    </BrowserRouter>
     </ContextProvider>
   )
 }
